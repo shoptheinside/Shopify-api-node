@@ -1,7 +1,7 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const qs = require('qs');
+var assign = require('lodash/assign');
+var qs = require('qs');
 
 /**
  * This provides methods used by resources that have only one kind of parent.
@@ -9,7 +9,7 @@ const qs = require('qs');
  *
  * @mixin
  */
-const baseChild = {
+var baseChild = {
   /**
    * Counts the number of records.
    *
@@ -18,11 +18,12 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  count(parentId, params) {
-    const key = 'count';
-    const url = this.buildUrl(parentId, key, params);
+  count: function count(parentId, params) {
+    var key = 'count';
+    var url = this.buildUrl(parentId, key, params);
     return this.shopify.request(url, 'GET', key);
   },
+
 
   /**
    * Creates a new record.
@@ -32,10 +33,11 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  create(parentId, params) {
-    const url = this.buildUrl(parentId);
+  create: function create(parentId, params) {
+    var url = this.buildUrl(parentId);
     return this.shopify.request(url, 'POST', this.key, params);
   },
+
 
   /**
    * Deletes a record.
@@ -46,10 +48,11 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  delete(parentId, id, params) {
-    const url = this.buildUrl(parentId, id, params);
+  delete: function _delete(parentId, id, params) {
+    var url = this.buildUrl(parentId, id, params);
     return this.shopify.request(url, 'DELETE');
   },
+
 
   /**
    * Get a single record by its ID.
@@ -60,10 +63,11 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  get(parentId, id, params) {
-    const url = this.buildUrl(parentId, id, params);
+  get: function get(parentId, id, params) {
+    var url = this.buildUrl(parentId, id, params);
     return this.shopify.request(url, 'GET', this.key);
   },
+
 
   /**
    * Get a list of records.
@@ -73,10 +77,11 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  list(parentId, params) {
-    const url = this.buildUrl(parentId, undefined, params);
+  list: function list(parentId, params) {
+    var url = this.buildUrl(parentId, undefined, params);
     return this.shopify.request(url, 'GET', this.name);
   },
+
 
   /**
    * Updates a record.
@@ -87,10 +92,11 @@ const baseChild = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  update(parentId, id, params) {
-    const url = this.buildUrl(parentId, id);
+  update: function update(parentId, id, params) {
+    var url = this.buildUrl(parentId, id);
     return this.shopify.request(url, 'PUT', this.key, params);
   },
+
 
   /**
    * Builds the request URL.
@@ -101,18 +107,16 @@ const baseChild = {
    * @return {Object} URL object
    * @private
    */
-  buildUrl(parentId, id, query) {
+  buildUrl: function buildUrl(parentId, id, query) {
     id || id === 0 || (id = '');
 
-    let path = `/admin/${this.parentName}/${parentId}/${this.name}/${id}`
-      .replace(/\/+/g, '/')
-      .replace(/\/$/, '');
+    var path = ('/admin/' + this.parentName + '/' + parentId + '/' + this.name + '/' + id).replace(/\/+/g, '/').replace(/\/$/, '');
 
     path += '.json';
 
     if (query) path += '?' + qs.stringify(query, { arrayFormat: 'brackets' });
 
-    return assign({ path }, this.shopify.baseUrl);
+    return assign({ path: path }, this.shopify.baseUrl);
   }
 };
 
