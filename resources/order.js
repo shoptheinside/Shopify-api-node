@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates an Order instance.
@@ -28,9 +28,12 @@ assign(Order.prototype, base);
  * @public
  */
 Order.prototype.close = function close(id) {
-  const url = this.buildUrl(`${id}/close`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(id + '/close');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -41,9 +44,12 @@ Order.prototype.close = function close(id) {
  * @public
  */
 Order.prototype.open = function open(id) {
-  const url = this.buildUrl(`${id}/open`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this2 = this;
+
+  var url = this.buildUrl(id + '/open');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this2.key];
+  });
 };
 
 /**
@@ -55,9 +61,12 @@ Order.prototype.open = function open(id) {
  * @public
  */
 Order.prototype.cancel = function cancel(id, params) {
-  const url = this.buildUrl(`${id}/cancel`);
-  return this.shopify.request(url, 'POST', undefined, params)
-    .then(body => body[this.key]);
+  var _this3 = this;
+
+  var url = this.buildUrl(id + '/cancel');
+  return this.shopify.request(url, 'POST', undefined, params).then(function (body) {
+    return body[_this3.key];
+  });
 };
 
 module.exports = Order;

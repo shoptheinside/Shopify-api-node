@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const baseChild = require('../mixins/base-child');
+var baseChild = require('../mixins/base-child');
 
 /**
  * Creates an CustomerAddress instance.
@@ -20,11 +20,7 @@ function CustomerAddress(shopify) {
   this.key = 'customer_address';
 }
 
-assign(CustomerAddress.prototype, pick(baseChild, [
-  'buildUrl',
-  'delete',
-  'get'
-]));
+assign(CustomerAddress.prototype, pick(baseChild, ['buildUrl', 'delete', 'get']));
 
 /**
  * Gets a list of addresses for a customer.
@@ -35,7 +31,7 @@ assign(CustomerAddress.prototype, pick(baseChild, [
  * @public
  */
 CustomerAddress.prototype.list = function list(customerId, params) {
-  const url = this.buildUrl(customerId, undefined, params);
+  var url = this.buildUrl(customerId, undefined, params);
   return this.shopify.request(url, 'GET', this.name);
 };
 
@@ -48,9 +44,12 @@ CustomerAddress.prototype.list = function list(customerId, params) {
  * @public
  */
 CustomerAddress.prototype.create = function create(customerId, params) {
-  const url = this.buildUrl(customerId);
-  return this.shopify.request(url, 'POST', undefined, { address: params })
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(customerId);
+  return this.shopify.request(url, 'POST', undefined, { address: params }).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -63,9 +62,12 @@ CustomerAddress.prototype.create = function create(customerId, params) {
  * @public
  */
 CustomerAddress.prototype.update = function update(customerId, id, params) {
-  const url = this.buildUrl(customerId, id);
-  return this.shopify.request(url, 'PUT', undefined, { address: params })
-    .then(body => body[this.key]);
+  var _this2 = this;
+
+  var url = this.buildUrl(customerId, id);
+  return this.shopify.request(url, 'PUT', undefined, { address: params }).then(function (body) {
+    return body[_this2.key];
+  });
 };
 
 /**
@@ -77,7 +79,7 @@ CustomerAddress.prototype.update = function update(customerId, id, params) {
  * @public
  */
 CustomerAddress.prototype.set = function set(customerId, params) {
-  const url = this.buildUrl(customerId, 'set', params);
+  var url = this.buildUrl(customerId, 'set', params);
   return this.shopify.request(url, 'PUT');
 };
 
@@ -90,7 +92,7 @@ CustomerAddress.prototype.set = function set(customerId, params) {
  * @public
  */
 CustomerAddress.prototype.default = function defaultAddress(customerId, id) {
-  const url = this.buildUrl(customerId, `${id}/default`);
+  var url = this.buildUrl(customerId, id + '/default');
   return this.shopify.request(url, 'PUT', this.key);
 };
 

@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a ResourceFeedback instance.
@@ -19,11 +19,6 @@ function ResourceFeedback(shopify) {
   this.key = 'resource_feedback';
 }
 
-assign(ResourceFeedback.prototype, omit(base, [
-  'count',
-  'delete',
-  'get',
-  'update'
-]));
+assign(ResourceFeedback.prototype, omit(base, ['count', 'delete', 'get', 'update']));
 
 module.exports = ResourceFeedback;

@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a StorefrontAccessToken instance.
@@ -19,10 +19,6 @@ function StorefrontAccessToken(shopify) {
   this.key = 'storefront_access_token';
 }
 
-assign(StorefrontAccessToken.prototype, omit(base, [
-  'count',
-  'get',
-  'update'
-]));
+assign(StorefrontAccessToken.prototype, omit(base, ['count', 'get', 'update']));
 
 module.exports = StorefrontAccessToken;

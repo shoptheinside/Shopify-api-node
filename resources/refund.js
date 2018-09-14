@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const baseChild = require('../mixins/base-child');
+var baseChild = require('../mixins/base-child');
 
 /**
  * Creates a Refund instance.
@@ -31,7 +31,7 @@ assign(Refund.prototype, omit(baseChild, ['count', 'delete', 'update']));
  * @public
  */
 Refund.prototype.calculate = function calculate(orderId, params) {
-  const url = this.buildUrl(orderId, 'calculate');
+  var url = this.buildUrl(orderId, 'calculate');
   return this.shopify.request(url, 'POST', this.key, params);
 };
 

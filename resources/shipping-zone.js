@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a ShippingZone instance.

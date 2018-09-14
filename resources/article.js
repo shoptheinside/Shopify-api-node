@@ -1,10 +1,12 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const qs = require('qs');
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-const baseChild = require('../mixins/base-child');
-const base = require('../mixins/base');
+var assign = require('lodash/assign');
+var qs = require('qs');
+
+var baseChild = require('../mixins/base-child');
+var base = require('../mixins/base');
 
 /**
  * Creates an Article instance.
@@ -30,8 +32,8 @@ assign(Article.prototype, baseChild);
  * @public
  */
 Article.prototype.authors = function authors() {
-  const key = 'authors';
-  const url = base.buildUrl.call(this, key);
+  var key = 'authors';
+  var url = base.buildUrl.call(this, key);
   return this.shopify.request(url, 'GET', key);
 };
 
@@ -44,20 +46,20 @@ Article.prototype.authors = function authors() {
  * @public
  */
 Article.prototype.tags = function tags(blogId, params) {
-  let path = '/admin';
+  var path = '/admin';
 
-  if (!params && typeof blogId === 'object') {
+  if (!params && (typeof blogId === 'undefined' ? 'undefined' : _typeof(blogId)) === 'object') {
     params = blogId;
     blogId = undefined;
   }
 
-  if (blogId || blogId === 0) path += `/blogs/${blogId}`;
+  if (blogId || blogId === 0) path += '/blogs/' + blogId;
 
-  path += `/${this.name}/tags.json`;
+  path += '/' + this.name + '/tags.json';
 
   if (params) path += '?' + qs.stringify(params, { arrayFormat: 'brackets' });
 
-  const url = assign({ path }, this.shopify.baseUrl);
+  var url = assign({ path: path }, this.shopify.baseUrl);
   return this.shopify.request(url, 'GET', 'tags');
 };
 

@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const baseChild = require('../mixins/base-child');
+var baseChild = require('../mixins/base-child');
 
 /**
  * Creates a ProductImage instance.

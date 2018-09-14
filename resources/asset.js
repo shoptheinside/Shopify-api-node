@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const baseChild = require('../mixins/base-child');
+var baseChild = require('../mixins/base-child');
 
 /**
  * Creates an Asset instance.
@@ -31,7 +31,7 @@ assign(Asset.prototype, pick(baseChild, ['list', 'buildUrl']));
  * @public
  */
 Asset.prototype.get = function get(themeId, params) {
-  const url = this.buildUrl(themeId, undefined, params);
+  var url = this.buildUrl(themeId, undefined, params);
   return this.shopify.request(url, 'GET', this.key);
 };
 
@@ -44,7 +44,7 @@ Asset.prototype.get = function get(themeId, params) {
  * @public
  */
 Asset.prototype.create = function create(themeId, params) {
-  const url = this.buildUrl(themeId);
+  var url = this.buildUrl(themeId);
   return this.shopify.request(url, 'PUT', this.key, params);
 };
 
@@ -67,7 +67,7 @@ Asset.prototype.update = Asset.prototype.create;
  * @public
  */
 Asset.prototype.delete = function remove(themeId, params) {
-  const url = this.buildUrl(themeId, undefined, params);
+  var url = this.buildUrl(themeId, undefined, params);
   return this.shopify.request(url, 'DELETE');
 };
 

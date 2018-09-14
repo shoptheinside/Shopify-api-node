@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a Customer instance.
@@ -28,7 +28,7 @@ assign(Customer.prototype, base);
  * @public
  */
 Customer.prototype.search = function search(params) {
-  const url = this.buildUrl('search', params);
+  var url = this.buildUrl('search', params);
   return this.shopify.request(url, 'GET', this.name);
 };
 
@@ -40,10 +40,12 @@ Customer.prototype.search = function search(params) {
  * @public
  */
 Customer.prototype.accountActivationUrl = function accountActivationUrl(id) {
-  const url = this.buildUrl(`${id}/account_activation_url`);
+  var url = this.buildUrl(id + '/account_activation_url');
   return this.shopify.request(url, 'POST', undefined, {
-    customer: { id }
-  }).then(body => body.account_activation_url);
+    customer: { id: id }
+  }).then(function (body) {
+    return body.account_activation_url;
+  });
 };
 
 /**
@@ -55,7 +57,7 @@ Customer.prototype.accountActivationUrl = function accountActivationUrl(id) {
  * @public
  */
 Customer.prototype.sendInvite = function sendInvite(id, params) {
-  const url = this.buildUrl(`${id}/send_invite`);
+  var url = this.buildUrl(id + '/send_invite');
   return this.shopify.request(url, 'POST', 'customer_invite', params || {});
 };
 
@@ -67,7 +69,7 @@ Customer.prototype.sendInvite = function sendInvite(id, params) {
  * @public
  */
 Customer.prototype.orders = function orders(id) {
-  const url = this.buildUrl(`${id}/orders`);
+  var url = this.buildUrl(id + '/orders');
   return this.shopify.request(url, 'GET', 'orders');
 };
 

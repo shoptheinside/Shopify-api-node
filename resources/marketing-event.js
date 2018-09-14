@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a MarketingEvent instance.
@@ -29,7 +29,7 @@ assign(MarketingEvent.prototype, base);
  * @public
  */
 MarketingEvent.prototype.engagements = function engagements(id, params) {
-  const url = this.buildUrl(`${id}/engagements`);
+  var url = this.buildUrl(id + '/engagements');
   return this.shopify.request(url, 'POST', 'engagements', params);
 };
 

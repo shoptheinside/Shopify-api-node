@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a Checkout instance.
@@ -29,9 +29,12 @@ assign(Checkout.prototype, omit(base, 'delete'));
  * @public
  */
 Checkout.prototype.complete = function complete(token) {
-  const url = this.buildUrl(`${token}/complete`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(token + '/complete');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -42,7 +45,7 @@ Checkout.prototype.complete = function complete(token) {
  * @public
  */
 Checkout.prototype.shippingRates = function shippingRates(token) {
-  const url = this.buildUrl(`${token}/shipping_rates`);
+  var url = this.buildUrl(token + '/shipping_rates');
   return this.shopify.request(url, 'GET', 'shipping_rates');
 };
 

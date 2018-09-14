@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a ProductListing instance.
@@ -31,7 +31,7 @@ assign(ProductListing.prototype, omit(base, ['create', 'update']));
  */
 ProductListing.prototype.create = function create(productId, params) {
   params || (params = { product_id: productId });
-  const url = this.buildUrl(productId);
+  var url = this.buildUrl(productId);
   return this.shopify.request(url, 'PUT', this.key, params);
 };
 
@@ -43,8 +43,8 @@ ProductListing.prototype.create = function create(productId, params) {
  * @public
  */
 ProductListing.prototype.productIds = function productIds(params) {
-  const key = 'product_ids';
-  const url = this.buildUrl(key, params);
+  var key = 'product_ids';
+  var url = this.buildUrl(key, params);
   return this.shopify.request(url, 'GET', key);
 };
 

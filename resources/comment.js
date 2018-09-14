@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a Comment instance.
@@ -29,7 +29,7 @@ assign(Comment.prototype, omit(base, ['delete']));
  * @public
  */
 Comment.prototype.spam = function spam(id) {
-  const url = this.buildUrl(`${id}/spam`);
+  var url = this.buildUrl(id + '/spam');
   return this.shopify.request(url, 'POST', undefined, {});
 };
 
@@ -41,7 +41,7 @@ Comment.prototype.spam = function spam(id) {
  * @public
  */
 Comment.prototype.notSpam = function notSpam(id) {
-  const url = this.buildUrl(`${id}/not_spam`);
+  var url = this.buildUrl(id + '/not_spam');
   return this.shopify.request(url, 'POST', undefined, {});
 };
 
@@ -53,7 +53,7 @@ Comment.prototype.notSpam = function notSpam(id) {
  * @public
  */
 Comment.prototype.approve = function approve(id) {
-  const url = this.buildUrl(`${id}/approve`);
+  var url = this.buildUrl(id + '/approve');
   return this.shopify.request(url, 'POST', undefined, {});
 };
 
@@ -65,7 +65,7 @@ Comment.prototype.approve = function approve(id) {
  * @public
  */
 Comment.prototype.remove = function remove(id) {
-  const url = this.buildUrl(`${id}/remove`);
+  var url = this.buildUrl(id + '/remove');
   return this.shopify.request(url, 'POST', undefined, {});
 };
 
@@ -77,7 +77,7 @@ Comment.prototype.remove = function remove(id) {
  * @public
  */
 Comment.prototype.restore = function restore(id) {
-  const url = this.buildUrl(`${id}/restore`);
+  var url = this.buildUrl(id + '/restore');
   return this.shopify.request(url, 'POST', undefined, {});
 };
 

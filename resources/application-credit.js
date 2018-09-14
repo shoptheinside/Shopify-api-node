@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates an ApplicationCredit instance.
@@ -19,10 +19,6 @@ function ApplicationCredit(shopify) {
   this.key = 'application_credit';
 }
 
-assign(ApplicationCredit.prototype, omit(base, [
-  'count',
-  'delete',
-  'update'
-]));
+assign(ApplicationCredit.prototype, omit(base, ['count', 'delete', 'update']));
 
 module.exports = ApplicationCredit;

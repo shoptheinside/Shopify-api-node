@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a SmartCollection instance.
@@ -30,7 +30,7 @@ assign(SmartCollection.prototype, base);
  * @public
  */
 SmartCollection.prototype.order = function order(id, params) {
-  const url = this.buildUrl(`${id}/order`, params);
+  var url = this.buildUrl(id + '/order', params);
   return this.shopify.request(url, 'PUT', undefined, {});
 };
 

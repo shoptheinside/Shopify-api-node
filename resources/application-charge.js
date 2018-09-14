@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates an ApplicationCharge instance.
@@ -19,11 +19,7 @@ function ApplicationCharge(shopify) {
   this.key = 'application_charge';
 }
 
-assign(ApplicationCharge.prototype, omit(base, [
-  'count',
-  'delete',
-  'update'
-]));
+assign(ApplicationCharge.prototype, omit(base, ['count', 'delete', 'update']));
 
 /**
  * Activates a previously accepted one-time application charge.
@@ -34,7 +30,7 @@ assign(ApplicationCharge.prototype, omit(base, [
  * @public
  */
 ApplicationCharge.prototype.activate = function activate(id, params) {
-  const url = this.buildUrl(`${id}/activate`);
+  var url = this.buildUrl(id + '/activate');
   return this.shopify.request(url, 'POST', this.key, params);
 };
 

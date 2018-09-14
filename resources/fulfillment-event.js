@@ -1,7 +1,7 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const qs = require('qs');
+var assign = require('lodash/assign');
+var qs = require('qs');
 
 /**
  * Creates a FulfillmentEvent instance.
@@ -28,8 +28,8 @@ function FulfillmentEvent(shopify) {
  * @public
  */
 FulfillmentEvent.prototype.list = function list(orderId, fulfillmentId, params) {
-  const url = this.buildUrl(orderId, fulfillmentId, undefined, params);
-  return this.shopify.request(url, 'GET', `${this.key}s`);
+  var url = this.buildUrl(orderId, fulfillmentId, undefined, params);
+  return this.shopify.request(url, 'GET', this.key + 's');
 };
 
 /**
@@ -42,7 +42,7 @@ FulfillmentEvent.prototype.list = function list(orderId, fulfillmentId, params) 
  * @public
  */
 FulfillmentEvent.prototype.get = function get(orderId, fulfillmentId, id) {
-  const url = this.buildUrl(orderId, fulfillmentId, id);
+  var url = this.buildUrl(orderId, fulfillmentId, id);
   return this.shopify.request(url, 'GET', this.key);
 };
 
@@ -56,9 +56,12 @@ FulfillmentEvent.prototype.get = function get(orderId, fulfillmentId, id) {
  * @public
  */
 FulfillmentEvent.prototype.create = function create(orderId, fulfillmentId, params) {
-  const url = this.buildUrl(orderId, fulfillmentId);
-  return this.shopify.request(url, 'POST', undefined, { event: params })
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(orderId, fulfillmentId);
+  return this.shopify.request(url, 'POST', undefined, { event: params }).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -72,9 +75,12 @@ FulfillmentEvent.prototype.create = function create(orderId, fulfillmentId, para
  * @public
  */
 FulfillmentEvent.prototype.update = function update(orderId, fulfillmentId, id, params) {
-  const url = this.buildUrl(orderId, fulfillmentId, id);
-  return this.shopify.request(url, 'PUT', undefined, { event: params })
-    .then(body => body[this.key]);
+  var _this2 = this;
+
+  var url = this.buildUrl(orderId, fulfillmentId, id);
+  return this.shopify.request(url, 'PUT', undefined, { event: params }).then(function (body) {
+    return body[_this2.key];
+  });
 };
 
 /**
@@ -87,7 +93,7 @@ FulfillmentEvent.prototype.update = function update(orderId, fulfillmentId, id, 
  * @public
  */
 FulfillmentEvent.prototype.delete = function remove(orderId, fulfillmentId, id) {
-  const url = this.buildUrl(orderId, fulfillmentId, id);
+  var url = this.buildUrl(orderId, fulfillmentId, id);
   return this.shopify.request(url, 'DELETE');
 };
 
@@ -104,20 +110,13 @@ FulfillmentEvent.prototype.delete = function remove(orderId, fulfillmentId, id) 
 FulfillmentEvent.prototype.buildUrl = function buildUrl(orderId, fulfillmentId, id, query) {
   id || id === 0 || (id = '');
 
-  let path = [
-    '/admin/orders',
-    orderId,
-    this.parentName,
-    fulfillmentId,
-    this.name,
-    id
-  ].join('/');
+  var path = ['/admin/orders', orderId, this.parentName, fulfillmentId, this.name, id].join('/');
 
   path = path.replace(/\/+/g, '/').replace(/\/$/, '') + '.json';
 
   if (query) path += '?' + qs.stringify(query, { arrayFormat: 'brackets' });
 
-  return assign({ path }, this.shopify.baseUrl);
+  return assign({ path: path }, this.shopify.baseUrl);
 };
 
 module.exports = FulfillmentEvent;

@@ -1,9 +1,11 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const base = require('../mixins/base');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
+
+var base = require('../mixins/base');
 
 /**
  * Creates a RecurringApplicationCharge instance.
@@ -19,10 +21,7 @@ function RecurringApplicationCharge(shopify) {
   this.key = 'recurring_application_charge';
 }
 
-assign(RecurringApplicationCharge.prototype, omit(base, [
-  'count',
-  'update'
-]));
+assign(RecurringApplicationCharge.prototype, omit(base, ['count', 'update']));
 
 /**
  * Activates a recurring application charge.
@@ -33,9 +32,12 @@ assign(RecurringApplicationCharge.prototype, omit(base, [
  * @public
  */
 RecurringApplicationCharge.prototype.activate = function activate(id, params) {
-  const url = this.buildUrl(`${id}/activate`);
-  return this.shopify.request(url, 'POST', undefined, { [this.key]: params })
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(id + '/activate');
+  return this.shopify.request(url, 'POST', undefined, _defineProperty({}, this.key, params)).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 module.exports = RecurringApplicationCharge;

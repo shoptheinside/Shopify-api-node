@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a Shop instance.
@@ -28,7 +28,7 @@ assign(Shop.prototype, pick(base, 'buildUrl'));
  * @public
  */
 Shop.prototype.get = function get(params) {
-  const url = this.buildUrl(undefined, params);
+  var url = this.buildUrl(undefined, params);
   return this.shopify.request(url, 'GET', this.key);
 };
 

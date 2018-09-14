@@ -1,6 +1,6 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
 /**
  * Creates an AccessScope instance.
@@ -22,8 +22,8 @@ function AccessScope(shopify) {
  * @public
  */
 AccessScope.prototype.list = function list() {
-  const path = `/admin/oauth/${this.name}.json`;
-  const url = assign({ path }, this.shopify.baseUrl);
+  var path = '/admin/oauth/' + this.name + '.json';
+  var url = assign({ path: path }, this.shopify.baseUrl);
   return this.shopify.request(url, 'GET', this.name);
 };
 

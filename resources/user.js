@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a User instance.
@@ -27,7 +27,7 @@ assign(User.prototype, pick(base, ['get', 'list', 'buildUrl']));
  * @return {Promise} Promise that resolves with the result
  * @public
  */
-User.prototype.current = function() {
+User.prototype.current = function () {
   return this.get('current');
 };
 

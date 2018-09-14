@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a CustomCollection instance.

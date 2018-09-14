@@ -1,10 +1,10 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const baseChild = require('../mixins/base-child');
-const base = require('../mixins/base');
+var baseChild = require('../mixins/base-child');
+var base = require('../mixins/base');
 
 /**
  * Creates a DiscountCode instance.
@@ -31,7 +31,7 @@ assign(DiscountCode.prototype, omit(baseChild, 'count'));
  * @public
  */
 DiscountCode.prototype.lookup = function lookup(params) {
-  const url = base.buildUrl.call(this, 'lookup', params);
+  var url = base.buildUrl.call(this, 'lookup', params);
   return this.shopify.request(url, 'GET', this.key);
 };
 

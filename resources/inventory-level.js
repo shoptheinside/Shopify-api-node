@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates an InventoryLevel instance.
@@ -29,9 +29,12 @@ assign(InventoryLevel.prototype, pick(base, ['list', 'buildUrl']));
  * @public
  */
 InventoryLevel.prototype.adjust = function adjust(params) {
-  const url = this.buildUrl('adjust');
-  return this.shopify.request(url, 'POST', undefined, params)
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl('adjust');
+  return this.shopify.request(url, 'POST', undefined, params).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -43,9 +46,12 @@ InventoryLevel.prototype.adjust = function adjust(params) {
  * @public
  */
 InventoryLevel.prototype.connect = function connect(params) {
-  const url = this.buildUrl('connect');
-  return this.shopify.request(url, 'POST', undefined, params)
-    .then(body => body[this.key]);
+  var _this2 = this;
+
+  var url = this.buildUrl('connect');
+  return this.shopify.request(url, 'POST', undefined, params).then(function (body) {
+    return body[_this2.key];
+  });
 };
 
 /**
@@ -56,7 +62,7 @@ InventoryLevel.prototype.connect = function connect(params) {
  * @public
  */
 InventoryLevel.prototype.delete = function remove(params) {
-  const url = this.buildUrl(undefined, params);
+  var url = this.buildUrl(undefined, params);
   return this.shopify.request(url, 'DELETE');
 };
 
@@ -68,9 +74,12 @@ InventoryLevel.prototype.delete = function remove(params) {
  * @public
  */
 InventoryLevel.prototype.set = function set(params) {
-  const url = this.buildUrl('set');
-  return this.shopify.request(url, 'POST', undefined, params)
-    .then(body => body[this.key]);
+  var _this3 = this;
+
+  var url = this.buildUrl('set');
+  return this.shopify.request(url, 'POST', undefined, params).then(function (body) {
+    return body[_this3.key];
+  });
 };
 
 module.exports = InventoryLevel;

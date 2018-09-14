@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a CustomerSavedSearch instance.
@@ -30,7 +30,7 @@ assign(CustomerSavedSearch.prototype, base);
  * @public
  */
 CustomerSavedSearch.prototype.customers = function customers(id, params) {
-  const url = this.buildUrl(`${id}/customers`, params);
+  var url = this.buildUrl(id + '/customers', params);
   return this.shopify.request(url, 'GET', 'customers');
 };
 

@@ -1,8 +1,8 @@
 'use strict';
 
-const assign = require('lodash/assign');
+var assign = require('lodash/assign');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a DraftOrder instance.
@@ -29,7 +29,7 @@ assign(DraftOrder.prototype, base);
  * @public
  */
 DraftOrder.prototype.complete = function complete(id, params) {
-  const url = this.buildUrl(`${id}/complete`, params);
+  var url = this.buildUrl(id + '/complete', params);
   return this.shopify.request(url, 'PUT', this.key);
 };
 
@@ -42,7 +42,7 @@ DraftOrder.prototype.complete = function complete(id, params) {
  * @public
  */
 DraftOrder.prototype.sendInvoice = function sendInvoice(id, params) {
-  const url = this.buildUrl(`${id}/send_invoice`);
+  var url = this.buildUrl(id + '/send_invoice');
   return this.shopify.request(url, 'POST', 'draft_order_invoice', params);
 };
 

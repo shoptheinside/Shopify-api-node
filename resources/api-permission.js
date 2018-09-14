@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const pick = require('lodash/pick');
+var assign = require('lodash/assign');
+var pick = require('lodash/pick');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates an ApiPermission instance.
@@ -28,7 +28,7 @@ assign(ApiPermission.prototype, pick(base, 'buildUrl'));
  * @public
  */
 ApiPermission.prototype.delete = function () {
-  const url = this.buildUrl('current');
+  var url = this.buildUrl('current');
   return this.shopify.request(url, 'DELETE');
 };
 

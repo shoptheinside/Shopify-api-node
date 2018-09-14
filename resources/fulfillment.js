@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const baseChild = require('../mixins/base-child');
+var baseChild = require('../mixins/base-child');
 
 /**
  * Creates a Fulfillment instance.
@@ -31,9 +31,12 @@ assign(Fulfillment.prototype, omit(baseChild, ['delete']));
  * @public
  */
 Fulfillment.prototype.complete = function complete(orderId, id) {
-  const url = this.buildUrl(orderId, `${id}/complete`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this = this;
+
+  var url = this.buildUrl(orderId, id + '/complete');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this.key];
+  });
 };
 
 /**
@@ -45,9 +48,12 @@ Fulfillment.prototype.complete = function complete(orderId, id) {
  * @public
  */
 Fulfillment.prototype.open = function open(orderId, id) {
-  const url = this.buildUrl(orderId, `${id}/open`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this2 = this;
+
+  var url = this.buildUrl(orderId, id + '/open');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this2.key];
+  });
 };
 
 /**
@@ -59,9 +65,12 @@ Fulfillment.prototype.open = function open(orderId, id) {
  * @public
  */
 Fulfillment.prototype.cancel = function cancel(orderId, id) {
-  const url = this.buildUrl(orderId, `${id}/cancel`);
-  return this.shopify.request(url, 'POST', undefined, {})
-    .then(body => body[this.key]);
+  var _this3 = this;
+
+  var url = this.buildUrl(orderId, id + '/cancel');
+  return this.shopify.request(url, 'POST', undefined, {}).then(function (body) {
+    return body[_this3.key];
+  });
 };
 
 module.exports = Fulfillment;

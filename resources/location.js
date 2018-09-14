@@ -1,9 +1,9 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const base = require('../mixins/base');
+var base = require('../mixins/base');
 
 /**
  * Creates a Location instance.
@@ -29,8 +29,8 @@ assign(Location.prototype, omit(base, ['create', 'delete', 'update']));
  * @public
  */
 Location.prototype.inventoryLevels = function inventoryLevels(id) {
-  const key = 'inventory_levels';
-  const url = this.buildUrl(`${id}/${key}`);
+  var key = 'inventory_levels';
+  var url = this.buildUrl(id + '/' + key);
   return this.shopify.request(url, 'GET', key);
 };
 

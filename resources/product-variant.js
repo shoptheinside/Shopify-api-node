@@ -1,10 +1,10 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const omit = require('lodash/omit');
+var assign = require('lodash/assign');
+var omit = require('lodash/omit');
 
-const baseChild = require('../mixins/base-child');
-const base = require('../mixins/base');
+var baseChild = require('../mixins/base-child');
+var base = require('../mixins/base');
 
 /**
  * Creates a ProductVariant instance.
@@ -32,7 +32,7 @@ assign(ProductVariant.prototype, omit(baseChild, ['get', 'update']));
  * @public
  */
 ProductVariant.prototype.get = function get(id, params) {
-  const url = base.buildUrl.call(this, id, params);
+  var url = base.buildUrl.call(this, id, params);
   return this.shopify.request(url, 'GET', this.key);
 };
 
@@ -45,7 +45,7 @@ ProductVariant.prototype.get = function get(id, params) {
  * @public
  */
 ProductVariant.prototype.update = function update(id, params) {
-  const url = base.buildUrl.call(this, id);
+  var url = base.buildUrl.call(this, id);
   return this.shopify.request(url, 'PUT', this.key, params);
 };
 
