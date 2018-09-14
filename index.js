@@ -1,16 +1,18 @@
 'use strict';
 
-const camelCase = require('lodash/camelCase');
-const transform = require('lodash/transform');
-const defaults = require('lodash/defaults');
-const assign = require('lodash/assign');
-const EventEmitter = require('events');
-const stopcock = require('stopcock');
-const path = require('path');
-const got = require('got');
-const fs = require('fs');
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const pkg = require('./package');
+var camelCase = require('lodash/camelCase');
+var transform = require('lodash/transform');
+var defaults = require('lodash/defaults');
+var assign = require('lodash/assign');
+var EventEmitter = require('events');
+var stopcock = require('stopcock');
+var path = require('path');
+var got = require('got');
+var fs = require('fs');
+
+var pkg = require('./package');
 
 /**
  * Creates a Shopify instance.
@@ -27,12 +29,7 @@ const pkg = require('./package');
  */
 function Shopify(options) {
   if (!(this instanceof Shopify)) return new Shopify(options);
-  if (
-    !options ||
-    !options.shopName ||
-    !options.accessToken && (!options.apiKey || !options.password) ||
-    options.accessToken && (options.apiKey || options.password)
-  ) {
+  if (!options || !options.shopName || !options.accessToken && (!options.apiKey || !options.password) || options.accessToken && (options.apiKey || options.password)) {
     throw new Error('Missing or invalid options');
   }
 
@@ -49,15 +46,13 @@ function Shopify(options) {
   };
 
   this.baseUrl = {
-    auth: !options.accessToken && `${options.apiKey}:${options.password}`,
-    hostname: !options.shopName.endsWith('.myshopify.com')
-      ? `${options.shopName}.myshopify.com`
-      : options.shopName,
+    auth: !options.accessToken && options.apiKey + ':' + options.password,
+    hostname: !options.shopName.endsWith('.myshopify.com') ? options.shopName + '.myshopify.com' : options.shopName,
     protocol: 'https:'
   };
 
   if (options.autoLimit) {
-    const conf = transform(options.autoLimit, (result, value, key) => {
+    var conf = transform(options.autoLimit, function (result, value, key) {
       if (key === 'calls') key = 'limit';
       result[key] = value;
     }, { bucketSize: 35 });
@@ -77,8 +72,8 @@ Object.setPrototypeOf(Shopify.prototype, EventEmitter.prototype);
 Shopify.prototype.updateLimits = function updateLimits(header) {
   if (!header) return;
 
-  const limits = header.split('/').map(Number);
-  const callLimits = this.callLimits;
+  var limits = header.split('/').map(Number);
+  var callLimits = this.callLimits;
 
   callLimits.remaining = limits[1] - limits[0];
   callLimits.current = limits[0];
@@ -98,12 +93,14 @@ Shopify.prototype.updateLimits = function updateLimits(header) {
  * @private
  */
 Shopify.prototype.request = function request(url, method, key, params) {
-  const options = assign({
-    headers: { 'User-Agent': `${pkg.name}/${pkg.version}` },
+  var _this = this;
+
+  var options = assign({
+    headers: { 'User-Agent': pkg.name + '/' + pkg.version },
     timeout: this.options.timeout,
     json: true,
     retries: 0,
-    method
+    method: method
   }, url);
 
   if (this.options.accessToken) {
@@ -111,23 +108,21 @@ Shopify.prototype.request = function request(url, method, key, params) {
   }
 
   if (params) {
-    const body = key ? { [key]: params } : params;
+    var body = key ? _defineProperty({}, key, params) : params;
 
     options.headers['Content-Type'] = 'application/json';
     options.body = body;
   }
 
-  return got(options).then(res => {
-    const body = res.body;
+  return got(options).then(function (res) {
+    var body = res.body;
 
-    this.updateLimits(res.headers['x-shopify-shop-api-call-limit']);
+    _this.updateLimits(res.headers['x-shopify-shop-api-call-limit']);
 
     if (key) return body[key];
     return body || {};
-  }, err => {
-    this.updateLimits(
-      err.response && err.response.headers['x-shopify-shop-api-call-limit']
-    );
+  }, function (err) {
+    _this.updateLimits(err.response && err.response.headers['x-shopify-shop-api-call-limit']);
 
     return Promise.reject(err);
   });
@@ -136,19 +131,19 @@ Shopify.prototype.request = function request(url, method, key, params) {
 //
 // Require and instantiate the resources lazily.
 //
-fs.readdirSync(path.join(__dirname, 'resources')).forEach(name => {
-  const prop = camelCase(name.slice(0, -3));
+fs.readdirSync(path.join(__dirname, 'resources')).forEach(function (name) {
+  var prop = camelCase(name.slice(0, -3));
 
   Object.defineProperty(Shopify.prototype, prop, {
     get: function get() {
-      const resource = require(`./resources/${name}`);
+      var resource = require('./resources/' + name);
 
       return Object.defineProperty(this, prop, {
         value: new resource(this)
       })[prop];
     },
     set: function set(value) {
-      return Object.defineProperty(this, prop, { value })[prop];
+      return Object.defineProperty(this, prop, { value: value })[prop];
     }
   });
 });
