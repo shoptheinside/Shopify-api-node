@@ -1,7 +1,7 @@
 'use strict';
 
-const assign = require('lodash/assign');
-const qs = require('qs');
+var assign = require('lodash/assign');
+var qs = require('qs');
 
 /**
  * This provides methods used by resources that have no relationships with
@@ -9,7 +9,7 @@ const qs = require('qs');
  *
  * @mixin
  */
-const base = {
+var base = {
   /**
    * Counts the number of records.
    *
@@ -17,11 +17,12 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  count(params) {
-    const key = 'count';
-    const url = this.buildUrl(key, params);
+  count: function count(params) {
+    var key = 'count';
+    var url = this.buildUrl(key, params);
     return this.shopify.request(url, 'GET', key);
   },
+
 
   /**
    * Creates a new record.
@@ -30,10 +31,11 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  create(params) {
-    const url = this.buildUrl();
+  create: function create(params) {
+    var url = this.buildUrl();
     return this.shopify.request(url, 'POST', this.key, params);
   },
+
 
   /**
    * Deletes a record.
@@ -42,10 +44,11 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  delete(id) {
-    const url = this.buildUrl(id);
+  delete: function _delete(id) {
+    var url = this.buildUrl(id);
     return this.shopify.request(url, 'DELETE');
   },
+
 
   /**
    * Gets a single record by its ID.
@@ -55,10 +58,11 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  get(id, params) {
-    const url = this.buildUrl(id, params);
+  get: function get(id, params) {
+    var url = this.buildUrl(id, params);
     return this.shopify.request(url, 'GET', this.key);
   },
+
 
   /**
    * Gets a list of records.
@@ -67,10 +71,11 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  list(params) {
-    const url = this.buildUrl(undefined, params);
+  list: function list(params) {
+    var url = this.buildUrl(undefined, params);
     return this.shopify.request(url, 'GET', this.name);
   },
+
 
   /**
    * Updates a record.
@@ -80,10 +85,11 @@ const base = {
    * @return {Promise} Promise that resolves with the result
    * @public
    */
-  update(id, params) {
-    const url = this.buildUrl(id);
+  update: function update(id, params) {
+    var url = this.buildUrl(id);
     return this.shopify.request(url, 'PUT', this.key, params);
   },
+
 
   /**
    * Builds the request URL.
@@ -93,18 +99,16 @@ const base = {
    * @return {Object} URL object
    * @private
    */
-  buildUrl(id, query) {
+  buildUrl: function buildUrl(id, query) {
     id || id === 0 || (id = '');
 
-    let path = `/admin/${this.name}/${id}`
-      .replace(/\/+/g, '/')
-      .replace(/\/$/, '');
+    var path = ('/admin/' + this.name + '/' + id).replace(/\/+/g, '/').replace(/\/$/, '');
 
     path += '.json';
 
     if (query) path += '?' + qs.stringify(query, { arrayFormat: 'brackets' });
 
-    return assign({ path }, this.shopify.baseUrl);
+    return assign({ path: path }, this.shopify.baseUrl);
   }
 };
 
